@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="height:700px;width: 1400px"></div>
+<!-- ECharts单文件引入 -->
+<script src="Echarts/echarts.min.js" ></script>
+<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+<script type="text/javascript">
+data=["","","","","","","",""]
+function update()
+{
+     data.push(Math.round(Math.random()*10000));
+     data.shift();
+}
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById("main"));
+    var option = {
+        title : {
+            text: 'URL吞吐量：',
+            subtext: 'i-Make团队制作：'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['总吞吐量：']
+        },
+        //右上角工具条
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : ['7s前','6s前','5s前','4s前','3s前','2s前','1s前','当前']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value} 次/s'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'经过主机的径流量：',
+                type:'line',
+                data:[1,2,3,4,56,6,7,8],
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            },
+        ]
+    };
+    myChart.setOption(option);
+    //setOption(update,100);
+    // 为echarts对象加载数据
+    setInterval(function () {
+        update();
+        myChart.setOption({
+          series : [
+              {
+                  name:'经过主机的径流量：',
+                  type:'line',
+                  data: URL,
+                  markPoint : {
+                      data : [
+                          {type : 'max', name: '最大值'},
+                          {type : 'min', name: '最小值'}
+                      ]
+                  },
+                  markLine : {
+                      data : [
+                          {type : 'average', name: '平均值'}
+                      ]
+                  }
+              },
+          ]
+        });
+    }, 1000);
+
+</script>
+</body>

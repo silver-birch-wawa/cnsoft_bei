@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="height:700px;width: 1400px"></div>
+<!-- ECharts单文件引入 -->
+<script src="Echarts/echarts.min.js" ></script>
+<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+<script type="text/javascript">
+IP=["","","",""];
+CPU_COST=["","","",""]
+MEMORY_COST=["","","",""]
+
+
+function update()
+{
+     IP.push(Math.round(Math.random()*10000));
+     IP.shift();
+     MEMORY_COST.push(Math.round(Math.random()*10000));
+     MEMORY_COST.shift();
+     CPU_COST.push(Math.round(Math.random()*10000));
+     CPU_COST.shift();
+}
+var myChart = echarts.init(document.getElementById("main"));
+option = {
+    title : {
+        text: '各节点CPU与内存开销情况：',
+        subtext: '以IP进行区分：'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['内存占用情况','CPU占用情况']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : IP
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'内存占用情况',
+            type:'bar',
+            data:MEMORY_COST,
+            markPoint : {
+                data : [
+                    {type : 'max', name: '内存占用的最大值'},
+                    {type : 'min', name: '内存占用的最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'CPU占用情况',
+            type:'bar',
+            data:CPU_COST,
+            markPoint : {
+                data : [
+                  {type : 'max', name: 'CPU占用最大值'},
+                  {type : 'min', name: 'CPU占用最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+        }
+    ]
+};
+myChart.setOption(option);
+//setOption(update,100);
+// 为echarts对象加载数据
+setInterval(function () {
+    update();
+    myChart.setOption({
+      xAxis : [
+          {
+              type : 'category',
+              data : IP
+          }
+      ],
+      yAxis : [
+          {
+              type : 'value'
+          }
+      ],
+      series : [
+          {
+              name:'内存占用情况',
+              type:'bar',
+              data:MEMORY_COST,
+              markPoint : {
+                  data : [
+                      {type : 'max', name: '内存占用的最大值'},
+                      {type : 'min', name: '内存占用的最小值'}
+                  ]
+              },
+              markLine : {
+                  data : [
+                      {type : 'average', name: '平均值'}
+                  ]
+              }
+          },
+          {
+              name:'CPU占用情况',
+              type:'bar',
+              data:CPU_COST,
+              markPoint : {
+                  data : [
+                    {type : 'max', name: 'CPU占用最大值'},
+                    {type : 'min', name: 'CPU占用最小值'}
+                  ]
+              },
+              markLine : {
+                  data : [
+                      {type : 'average', name : '平均值'}
+                  ]
+              }
+          }
+      ]
+    });
+}, 1000);
+
+</script>

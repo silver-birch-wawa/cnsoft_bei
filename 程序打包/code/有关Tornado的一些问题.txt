@@ -1,0 +1,3 @@
+1.将tolnado程序放在主机下，获取url正常，但数据来源从内存转到了数据库+系统函数。
+2.将tolnado程序放在分节点下，则爬虫的数据将只含CPU/内存占用。
+3.堆栈waiting_url负责存放非商品页url，unrepeated_list_url存放去重后的url，unrepeated_good_url存放去重后的商品页url。

@@ -1,0 +1,484 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+
+<script language="javascript"type="text/javascript">
+Goods_info=[]
+//STORE_NAME=[]
+//GOODS_NAME=[]
+//PRICE=[]
+function doSend(message) {
+    //writeToScreen("SENT: " + message);
+    websocket.send(message);
+}
+
+var add_element=function()
+{
+  //alert(Goods_info.length);
+  tr=document.createElement("tr");
+  if((Goods_info.length/3)>=1)
+  {
+
+    for(var i=0;i<3;i++)
+    {
+    var td=document.createElement("td");
+    var node=document.createTextNode(Goods_info.pop());
+    td.appendChild(node);
+    tr.appendChild(td);
+    }
+  }
+  element=document.getElementsByTagName("table");
+  element[0].appendChild(tr);
+};
+
+var delete_element=function()
+{
+  element=document.getElementsByTagName("tr");
+  if(element.length>10)
+  {
+      element[1].parentElement.removeChild(element[1])
+  }
+}
+
+//////////////////  url 通讯模块  /////////////////////
+var wsUri ="ws://localhost:10008/";
+var output;
+
+function init() {
+    output = document.getElementById("output");
+    testWebSocket();
+}
+
+function testWebSocket() {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) {
+        onOpen(evt)
+    };
+    websocket.onclose = function(evt) {
+        onClose(evt)
+    };
+    websocket.onmessage = function(evt) {
+        onMessage(evt)
+    };
+    websocket.onerror = function(evt) {
+        onError(evt)
+    };
+}
+
+function onOpen(evt) {
+    //writeToScreen("CONNECTED");
+    doSend("Wake");
+}
+
+function onClose(evt) {
+    //writeToScreen("DISCONNECTED");
+}
+
+ip_num=1
+MEMORY_COST=["","","","","","","","","",""]
+IP=[]
+CPU_COST=["","","","","","","","","",""]
+URL=["","","","","","","","","",""]
+
+function onMessage(evt)
+{
+      Data=evt.data;
+      //b=JSON.parse(Data)
+      //alert(Data);
+      b=eval("("+Data+")");
+
+      if(b["GOODS_NAME"]==undefined)
+      {
+         //  ,,,,,,,,,,
+         //MEMORY_COST.push(b["MEMORY_COST"])
+         if(IP.indexOf(b["IP"])==-1)
+         {
+           IP.push(b["IP"]);
+           ip_num=IP.length;
+           CPU_COST.push(b["CPU_COST"]);
+           MEMORY_COST.push(b["MEMORY_COST"]);
+           //alert(CPU_COST);
+           URL.push(b["URL"]);
+           URL.shift()
+         }
+         else if(IP.indexOf(b["IP"])>=0)
+         {
+           position=IP.indexOf(b["IP"]);
+           CPU_COST[position]=b["CPU_COST"];
+           MEMORY_COST[position]=b["MEMORY_COST"];
+           URL.push(b["URL"])
+           URL.shift()
+           //alert("CPU_COST");
+         }
+         //CPU_COST.push(b["CPU_COST"])
+         //CPU_COST.shift()
+         //MEMORY_COST.shift()
+         //alert("empty")
+         //alert(CPU_COST);
+         //alert(URL);
+         //alert(Goods_info);
+         doSend("wake");
+      }
+      else
+      {
+        //b=JSON.parse(Data);
+        //alert(Data);
+        //STORE_NAME.push(b["STORE_NAME"])
+        //GOODS_NAME.push(b["GOODS_NAME"])
+        //PRICE.push(b["PRICE"])
+        Goods_info.push(b["PRICE"]);
+        Goods_info.push(b["GOODS_NAME"]);
+        Goods_info.push(b["STORE_NAME"]);
+
+        add_element();
+        delete_element();
+
+        if(IP.indexOf(b["IP"])==-1)
+        {
+          IP.push(b["IP"]);
+          ip_num=IP.length;
+          CPU_COST.push(b["CPU_COST"]);
+          MEMORY_COST.push(b["MEMORY_COST"]);
+          //alert(CPU_COST);
+        }
+        else if(IP.indexOf(b["IP"])>=0)
+        {
+          position=IP.indexOf(b["IP"]);
+          CPU_COST[position]=b["CPU_COST"];
+          MEMORY_COST[position]=b["MEMORY_COST"];
+          //alert(CPU_COST);
+        }
+        URL.push(b["URL"])
+
+        console.log("CPU_COST: "+CPU_COST);
+        console.log("URL: "+URL);
+        console.log("Goods_info: "+Goods_info);
+
+        URL.shift()
+        Goods_info.shift()
+        Goods_info.shift()
+        Goods_info.shift()
+
+        doSend("wake");
+        //websocket.close();
+      }
+
+}
+
+function onError(evt) {
+    writeToScreen('<span style="color: red;">ERROR:</span> '+ evt.data);
+}
+
+
+window.addEventListener("load", init, false);
+</script>
+
+<!-- 校徽图标 -->
+</div>
+  <img src="img/school.png" style="position:absolute; margin-top:10px;margin-left:1150px" alt="Pulpit rock" width="100" height="100"/>
+<div class="manu_div toggle-menu menu-right push-body">
+
+<head>
+    <!-- 引入 ECharts 文件 -->
+   <meta charset="utf-8">
+   <script src="Echarts/echarts.min.js" ></script>
+
+  <!-- title设置 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>分布式爬虫系统</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/mainpage.css" />
+    <style type="text/css">
+        /*设置内联框架的位置*/
+        h2.pos_abs {
+            position: absolute;
+            left: 220px;
+            top: 120px;
+        }
+    </style>
+</head>
+
+<body background="img/sc.png">
+    <img src="img/title1.png" style="width:800px;height:80px;height-top:0px;opacity:0.6;filter:alpha(opacity=40);"></img>
+    <!--设置标题-->
+    <left>
+        <span style="font-family:黑体; font-size :32px; color:#ffffff">
+            <div style="position: relative; width: 600px; height: 90px;">
+                <img src="img/sc.png" width="340" height="200">
+                <!--<span style="position: absolute; top:50px; left:70px;">分布式爬虫系统</span>-->
+            </div>
+        </span>
+    </left>
+    <br />
+    <!--设置内联框架，显示不同板块页面-->
+    <h2 class="pos_abs"><iframe name="fname"  width="1000" height="500" frameborder="0"></iframe></h2>
+
+
+  <!-- ------------------------------------------------ 柱状图 -------------------------------------------------------------------->
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="zhuzhuangtu" style="width: 600px;height:400px;float:left;margin-left=0px"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart1 = echarts.init(document.getElementById("zhuzhuangtu"));
+        option = {
+            title : {
+                text: 'CPU与内存开销情况：',
+                subtext: '以IP进行区分：'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['内存占用情况','CPU占用情况']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : IP
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'内存占用情况',
+                    type:'bar',
+                    data:MEMORY_COST,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '内存占用的最大值'},
+                            {type : 'min', name: '内存占用的最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                },
+                {
+                    name:'CPU占用情况',
+                    type:'bar',
+                    data:CPU_COST,
+                    markPoint : {
+                        data : [
+                          {type : 'max', name: 'CPU占用最大值'},
+                          {type : 'min', name: 'CPU占用最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name : '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+        myChart1.setOption(option);
+        //setOption(update,100);
+        // 为echarts对象加载数据
+        setInterval(function () {
+            //update();
+            myChart1.setOption({
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : IP
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value'
+                  }
+              ],
+              series : [
+                  {
+                      name:'内存占用情况',
+                      type:'bar',
+                      data:MEMORY_COST,
+                      markPoint : {
+                          data : [
+
+                          ]
+                      },
+                      markLine : {
+                          data : [
+                              {type : 'average', name: '平均值'}
+                          ]
+                      }
+                  },
+                  {
+                      name:'CPU占用情况',
+                      type:'bar',
+                      data:CPU_COST,
+                      markPoint : {
+                          data : [
+
+                          ]
+                      },
+                      markLine : {
+                          data : [
+                              {type : 'average', name : '平均值'}
+                          ]
+                      }
+                  }
+              ]
+            });
+        }, 1000);
+/////////////////////////////    设置刷新时间     /////////////////////////////////////
+
+</script>
+
+    <!-- ------------------------------------------------ 折线图 -------------------------------------------------------------------->
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;float:right;margin-left=800px"></div>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart2 = echarts.init(document.getElementById("main"));
+            var option = {
+                title : {
+                    text: 'URL吞吐量：',
+                    subtext: 'i-Make团队制作：'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['总吞吐量：']
+                },
+                //右上角工具条
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['7s前','6s前','5s前','4s前','3s前','2s前','1s前','当前']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            formatter: '{value} 次'
+                        }
+                    }
+                ],
+                series : [
+                    {
+                        name:'经过主机的径流量：',
+                        type:'line',
+                        data:[0,0,0,0,0,0,0,0],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    },
+                ]
+            };
+            myChart2.setOption(option);
+            //setOption(update,100);
+            // 为echarts对象加载数据
+            setInterval(function () {
+                //update();
+                myChart2.setOption({
+                  series : [
+                      {
+                          name:'经过主机的径流量：',
+                          type:'line',
+                          data: URL,
+                          markPoint : {
+                              data : [
+                                  {type : 'max', name: '最大值'},
+                                  {type : 'min', name: '最小值'}
+                              ]
+                          },
+                          markLine : {
+                              data : [
+                                  {type : 'average', name: '平均值'}
+                              ]
+                          }
+                      },
+                  ]
+                });
+            }, 1000);
+
+        </script>
+
+  <!-- ------------------------------------------------ 表格 -------------------------------------------------------------------->
+
+  <style>
+      #spider
+      {
+      font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+      width:100%;
+      border-collapse:collapse;
+      }
+
+      #spider td,th
+      {
+      font-size:20px;
+      border:1px solid yellow;
+      padding:3px 7px 2px 7px;
+      }
+
+      #spider th
+      {
+      font-size:1.4em;
+      text-align:left;
+      padding-top:5px;
+      padding-bottom:4px;
+      background-color:#A7C942;
+      color:#ffffff;
+      color:grey;
+      }
+
+      #spider tr.alt td
+      {
+      color:#000000;
+      background-color:#EAF2D3;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <table id="spider">
+    <tr>
+    <th>店家名称</th>
+    <th>商品名称</th>
+    <th>商品价格</th>
+    </tr>
+
+    </table>
+  </body>
+</html>

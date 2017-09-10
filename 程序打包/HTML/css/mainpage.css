@@ -1,0 +1,32 @@
+/*设置垂直导航栏*/
+ul
+{
+    list-style-type:none; /*去掉ul列表前面的点*/
+    margin:20px;/*整个导航栏外间距*/
+    padding:5px;/*整个导航栏内间距*/
+}
+
+a
+{
+    font-family:'Microsoft YaHei'; /*设置字体为微软雅黑*/
+    font-size :24px; /*字号为24px*/
+    text-decoration: none;  /*除去超链接默认的下划线*/
+    width: 50px; /*导航条宽度*/
+    color:#ffffff;/*字体颜色为白色*/
+    text-align: center;/*文字居中*/
+    margin: 40px;/*设置每个导航之间的距离*/
+
+}
+
+    a:link, a:visited {
+        display: block; /*导航栏按块显示*/
+        padding: 4px;
+        text-decoration: none;
+        text-transform: uppercase; /*仅有大写字母*/
+        width: 150px; /*导航块宽度*/
+    }
+
+a:hover,a:active
+{
+    background-color:#065578;/*鼠标放上后显示的颜色*/
+}
