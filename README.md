@@ -205,4 +205,5 @@
 
 ### 演示视频请点击:
 <br>
-<a href="https://v.youku.com/v_show/id_XMzAxNjE1MDc5Ng==.html?x&sharefrom=android&sharekey=0b4b370700bbf36df5eb7c752f5cae749"><img src="./演示图片.png"/></a>
+<a href="https://v.youku.com/v_show/id_XMzAxNjE1MDc5Ng==.html?x&sharefrom=android&sharekey=0b4b370700bbf36df5eb7c752f5cae749"><img src="./演示图片.png" width="80%"/></a>
+
