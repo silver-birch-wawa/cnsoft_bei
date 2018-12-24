@@ -203,4 +203,6 @@
 ```
 ----------------------------------------------------------------------------
 
-<video id="video" controls="" preload="none" src="./Show.mp4" width="600px">
+### 演示视频请点击:
+<br>
+<a href="https://v.youku.com/v_show/id_XMzAxNjE1MDc5Ng==.html?x&sharefrom=android&sharekey=0b4b370700bbf36df5eb7c752f5cae749"><img src="./演示图片.png"/></a>
