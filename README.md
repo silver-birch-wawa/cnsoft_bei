@@ -203,5 +203,4 @@
 ```
 ----------------------------------------------------------------------------
 
-<video id="video" controls="" preload="none" poster="./分布式爬虫系统演示视频.mp4">
-<video src="./分布式爬虫系统演示视频.mp4" width="300px">
+<video id="video" controls="" preload="none" src="./Show.mp4" width="600px">
