@@ -1,7 +1,9 @@
 # cnsoftbei--iMake
 使用指南：
 1.先启动redis数据库-->server_main.py+spider_main.py-->login.html
+
 2.开启程序前请保证redis中至少有一行以上数据。
+
 3.本程序使用TCP通讯（爬虫模块），websocket通讯（浏览器--爬虫模块），PhantomJS/Chrome模拟浏览器行为。
 
 文件结构如下：
