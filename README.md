@@ -1,5 +1,6 @@
 # cnsoftbei--iMake
 使用指南：
+
 1.先启动redis数据库-->server_main.py+spider_main.py-->login.html
 
 2.开启程序前请保证redis中至少有一行以上数据。
